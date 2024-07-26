@@ -32,7 +32,7 @@ def remove_short():
         words = json.load(file)
 
     for word in words:
-        if len(word) < 4:
+        if len(word) < 3:
             words.remove(word)
 
     with open('words.json', 'w') as file:
