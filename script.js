@@ -2,36 +2,149 @@ import { DICTIONARY } from "./dictionary.js";
 
 //initialize
 let game_word = 'cane';
+let guess_word = '';
 let undo = 2;
 let score = 0;
 let used_words = [];
 let mistakes = 5;
 
+//more initialize
+let todays_word = document.getElementById("current-word");
+used_words.push(game_word)
+let current_word = document.createElement("h2");
+current_word.textContent = game_word;
+todays_word.appendChild(current_word);
+let scoreboard = document.getElementById("score");
+let show_score = document.createElement("h3");
+show_score.textContent = "Score: " + score;
+scoreboard.appendChild(show_score);
+
+
+//update the score
+function updateScore(length) {
+    if (length === 3) {
+        score += 1
+    }
+    if (length === 4) {
+        score += 2
+    }
+    if (length === 5) {
+        score += 5
+    }
+    if (length === 6) {
+        score += 10
+    }
+    if (length === 7) {
+        score += 20
+    }
+    if (length >= 8) {
+        score += 50
+    }
+}
+
+//submit the word
+function submitWord(word) {
+    
+    //get first letter of word
+    let firstLetter = word.charAt(0);
+    console.log(firstLetter)
+    //check if word is in dictionary, unused, and valid
+    if (DICTIONARY[firstLetter].includes(word)) {
+        //return if word has been used
+        console.log("check 1")
+        if (used_words.includes(word)) {
+            //TODO - implement a message telling user word has been used
+            return
+        }
+        
+        //validate word
+        if (validate_length(game_word, word)) {
+            if (validate_word(game_word, word)) {
+
+            }
+            else {
+                //TODO implement explanation
+                return
+            }
+        }
+        else {
+            //TODO implement explanation
+            return
+        }
+
+        game_word = word;
+        used_words.push(word)
+        updateScore(game_word.length)
+        //update score on screen
+        let scorediv = document.getElementById("score")
+        let scoreboard = scorediv.firstElementChild
+        scoreboard.textContent = "Score: " + score
+        current_word.textContent = game_word
+
+        //restart entry box
+        let guess = document.getElementById("submit_word")
+        while (guess.children.length > 1) {
+            guess.removeChild(guess.lastChild)
+        }
+        guess.firstElementChild.textContent = ""
+        guess_word = ""
+        
+        
+    }
+    else {
+        //TODO a message again
+        return
+    }
+}
+
 //display typed letters to guess
 function typeLetter (letter) {
     
     //don't allow more letters than length + 1 of current word
-    console.log("Entering Type Letter")
     letter = letter.toLowerCase()
 
     let guess = document.getElementById("submit_word")
-    let boxes = guess.children;
+    let boxes = guess.children
     let current_length = boxes.length;
 
     console.log(boxes)
 
     for (let i = 0; i < current_length; i++) {
-        console.log("Entering Loop")
         let box = boxes.item(i)
         if (box.textContent.trim() == "") {
             //fill empty box with letter
             box.textContent = letter;
-            //add empty box to end
-            let new_box = document.createElement("div")
-            new_box.className = "letter"
-            guess.appendChild(new_box)
+            guess_word = guess_word + letter;
+            
+            //add empty box to end (unless max length already)
+            if (guess.children.length < game_word.length + 1) {
+                let new_box = document.createElement("div")
+                new_box.className = "letter"
+                guess.appendChild(new_box)
+            }
+            
         }
     }
+}
+
+//backspace in guess
+function backspace() {
+    let guess = document.getElementById("submit_word")
+    
+    //do nothing if no letters yet
+    if (guess.children.length === 1) {
+        return
+    }
+
+    //if at max-length, empty final box
+    if (guess.children.length === game_word.length+1 && guess.lastElementChild.textContent != "") {
+        guess.lastElementChild.textContent = ""
+    } else {
+    //delete last letter entered
+    guess.lastElementChild.previousElementSibling.remove()
+    }
+    //delete word from guess
+    guess_word = guess_word.substring(0, guess_word.length - 1);
 }
 
 //validate word length is within 1
@@ -116,18 +229,6 @@ function validate_word(word, new_word) {
 
 }
 
-function display_start() {
-    let todays_word = document.getElementById("current-word");
-    let word = document.createElement("h2");
-    word.textContent = game_word;
-    todays_word.appendChild(word);
-    let scoreboard = document.getElementById("score");
-    let show_score = document.createElement("h3");
-    show_score.textContent = "Score: " + score;
-    scoreboard.appendChild(show_score);
-}
-
-display_start();
 
 //listen for word submission
 document.addEventListener("keyup", (e) => {
@@ -135,8 +236,14 @@ document.addEventListener("keyup", (e) => {
     let pressed = String(e.key)
 
     //delete letters
-
+    if (pressed === "Backspace") {
+        backspace()
+    }
     //submit guess
+    if (pressed === "Enter") {
+        submitWord(guess_word)
+    }
+
 
     //add letter
     let letter = String(pressed.match(/[a-z]/gi))
