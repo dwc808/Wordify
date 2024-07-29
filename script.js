@@ -1,12 +1,38 @@
-let prompt = require('prompt-sync')();
-let dictionary = require('./sections.json');
+import { DICTIONARY } from "./dictionary.js";
 
 //initialize
 let game_word = 'cane';
 let undo = 2;
-let new_words = 0;
+let score = 0;
 let used_words = [];
 let mistakes = 5;
+
+//display typed letters to guess
+function typeLetter (letter) {
+    
+    //don't allow more letters than length + 1 of current word
+    console.log("Entering Type Letter")
+    letter = letter.toLowerCase()
+
+    let guess = document.getElementById("submit_word")
+    let boxes = guess.children;
+    let current_length = boxes.length;
+
+    console.log(boxes)
+
+    for (let i = 0; i < current_length; i++) {
+        console.log("Entering Loop")
+        let box = boxes.item(i)
+        if (box.textContent.trim() == "") {
+            //fill empty box with letter
+            box.textContent = letter;
+            //add empty box to end
+            let new_box = document.createElement("div")
+            new_box.className = "letter"
+            guess.appendChild(new_box)
+        }
+    }
+}
 
 //validate word length is within 1
 function validate_length(word, new_word) {
@@ -90,49 +116,35 @@ function validate_word(word, new_word) {
 
 }
 
-while (mistakes > 0) {
-    
-    //print current word
-    console.log("the current word is " + game_word );
-
-    //get the word from user
-    let word = prompt("Enter your next word here: ");
-
-    //get first letter of word
-    let firstLetter = word.charAt(0);
-
-    //check if word is in dictionary and unused, if so, update
-    if (dictionary[firstLetter].includes(word)) {
-        
-        //try again if word has already been used
-        if (used_words.includes(word)) {
-            console.log("You've already used " + word + ". Try again!")
-            continue
-        }
-        
-        //validate word
-        if (validate_length(game_word, word)) {
-            if (validate_word(game_word, word)) {
-
-            }
-            else {
-                console.log("You've changed more than one letter. Try again!")
-                continue
-            }
-        }
-        else {
-            console.log("You've changed more than one letter. Try again!")
-            continue
-        }
-
-        game_word = word;
-        used_words.push(word)
-        new_words += 1;
-        console.log("You've made " + new_words + " words!")
-    }
-    else {
-        mistakes -= 1;
-        console.log("Invalid word. You have " + mistakes + " mistakes left.")
-    }
-
+function display_start() {
+    let todays_word = document.getElementById("current-word");
+    let word = document.createElement("h2");
+    word.textContent = game_word;
+    todays_word.appendChild(word);
+    let scoreboard = document.getElementById("score");
+    let show_score = document.createElement("h3");
+    show_score.textContent = "Score: " + score;
+    scoreboard.appendChild(show_score);
 }
+
+display_start();
+
+//listen for word submission
+document.addEventListener("keyup", (e) => {
+    
+    let pressed = String(e.key)
+
+    //delete letters
+
+    //submit guess
+
+    //add letter
+    let letter = String(pressed.match(/[a-z]/gi))
+
+    if (letter.length > 1) {
+        return
+    } else {
+        typeLetter(letter)
+    }
+
+})
