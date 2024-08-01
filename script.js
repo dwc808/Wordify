@@ -1,12 +1,11 @@
 import { DICTIONARY } from "./dictionary.js";
 
 //initialize
-let game_word = 'cane';
+let game_word = 'start';
 let guess_word = '';
 let undo = 2;
 let score = 0;
 let used_words = [];
-let mistakes = 5;
 
 //more initialize
 let todays_word = document.getElementById("current-word");
@@ -19,27 +18,54 @@ let show_score = document.createElement("h3");
 show_score.textContent = "Score: " + score;
 scoreboard.appendChild(show_score);
 
+//fadeout score
+function fadeOut(element) {
+    let opacity = 1
+    let timer = setInterval(function () {
+        if (opacity <= 0.2) {
+            clearInterval(timer)
+            element.remove();
+        }
+        element.style.opacity = opacity
+        opacity -= .1
+    }, 85)
+}
 
 //update the score
 function updateScore(length) {
+    //create element to display score
+    let score_plus = document.createElement("h4");
+    score_plus.style.color = "green";
+    let score_tip = 0
+    
     if (length === 3) {
         score += 1
+        score_tip = 1
     }
     if (length === 4) {
         score += 2
+        score_tip = 2
     }
     if (length === 5) {
         score += 5
+        score_tip = 5
     }
     if (length === 6) {
         score += 10
+        score_tip = 10
     }
     if (length === 7) {
         score += 20
+        score_tip = 20
     }
     if (length >= 8) {
         score += 50
+        score_tip = 50
     }
+
+    score_plus.textContent = "+ " + score_tip
+    scoreboard.appendChild(score_plus)
+    fadeOut(score_plus)
 }
 
 //submit the word
@@ -51,9 +77,12 @@ function submitWord(word) {
     //check if word is in dictionary, unused, and valid
     if (DICTIONARY[firstLetter].includes(word)) {
         //return if word has been used
-        console.log("check 1")
         if (used_words.includes(word)) {
-            //TODO - implement a message telling user word has been used
+            
+            let alert = document.getElementById("invalid_words");
+            alert.textContent = "You have already used this word."
+            alert.style.visibility = 'visible'
+
             return
         }
         
@@ -62,19 +91,29 @@ function submitWord(word) {
             if (validate_word(game_word, word)) {
 
             }
-            else {
-                //TODO implement explanation
+            else {               
+                let alert = document.getElementById("invalid_words");
+                alert.textContent = "You changed too many letters."
+                alert.style.visibility = 'visible'
                 return
             }
         }
         else {
-            //TODO implement explanation
+            
+            let alert = document.getElementById("invalid_words");
+            alert.textContent = "Your word is too short."
+            alert.style.visibility = 'visible'
+
             return
         }
 
-        game_word = word;
+        //update word, used words, display used word
+        let used_display = document.getElementById("used_words")
+        used_display.textContent = used_display.textContent + "   " + game_word
+        game_word = word
         used_words.push(word)
         updateScore(game_word.length)
+
         //update score on screen
         let scorediv = document.getElementById("score")
         let scoreboard = scorediv.firstElementChild
@@ -92,7 +131,9 @@ function submitWord(word) {
         
     }
     else {
-        //TODO a message again
+        let alert = document.getElementById("invalid_words");
+            alert.textContent = "Not a valid word."
+            alert.style.visibility = 'visible'
         return
     }
 }
@@ -229,21 +270,32 @@ function validate_word(word, new_word) {
 
 }
 
+//close tooltip
+document.getElementById("close").addEventListener("click", function() {
+    document.getElementById("rules").style.display = "none"
+})
 
-//listen for word submission
+//listen for letter/word submission
 document.addEventListener("keyup", (e) => {
     
     let pressed = String(e.key)
+
+    let alert = document.getElementById("invalid_words") 
+        
+    if (alert.style.visibility == "visible") {
+        alert.style.visibility = "hidden"
+    }
+    
 
     //delete letters
     if (pressed === "Backspace") {
         backspace()
     }
+
     //submit guess
     if (pressed === "Enter") {
         submitWord(guess_word)
     }
-
 
     //add letter
     let letter = String(pressed.match(/[a-z]/gi))
@@ -255,3 +307,4 @@ document.addEventListener("keyup", (e) => {
     }
 
 })
+

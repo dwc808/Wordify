@@ -1,23 +1,55 @@
 
+body {
+    text-align:center;
+}
+
 h1 {
-    text-align: center;
     color: rgb(255, 153, 0);
     font-family: monospace;
     font-size: 700%;
 }
 
 h2 {
-    text-align: center;
+    
     color: lightseagreen;
     font-family: monospace;
     font-size: 500%;
 }
 
-h3 {
+#score {
     text-align: right;
     margin-right: 15%;
     font-size: 400%;
     font-family: monospace;
+    float:right
+}
+
+h4 {
+    position: absolute;
+    bottom: 40%;
+    right: 15%;
+}
+
+#rules {
+    display: flex;
+    margin: 0% 30% 0% 36%;
+    padding: 15px;
+    text-align: center;
+    position: absolute;
+    width: 25%;
+    z-index: 100;
+    font-family: monospace;
+    font-size: 150%;
+    background-color: orange;
+}
+
+#close {
+    font-size: 120%;
+    background-color: transparent;
+    border: none;
+    background-image: none;
+    display: flex;
+    justify-content: flex-start;
 }
 
 #submit_word {
@@ -38,4 +70,27 @@ div.letter {
     font-family: monospace;
     font-size: 200%;
     color: white;
+}
+
+#invalid_words {
+    visibility: hidden;
+    display: block;
+    color: orange;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 150%;
+}
+
+#used_words {
+    color: lightseagreen;
+    font-family: monospace;
+    margin: 20% 10% 0 10%;
+    font-size: 300%;
+    text-align: center;
+    position: absolute;
+    display: block;
+    flex-wrap: wrap;
+    flex-shrink: 2;
 }
