@@ -109,7 +109,7 @@ function submitWord(word) {
 
         //update word, used words, display used word
         let used_display = document.getElementById("used_words")
-        used_display.textContent = used_display.textContent + "   " + game_word
+        used_display.textContent = used_display.textContent + "      " + game_word
         game_word = word
         used_words.push(word)
         updateScore(game_word.length)

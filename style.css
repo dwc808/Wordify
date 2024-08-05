@@ -1,18 +1,25 @@
-
 body {
     text-align:center;
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+}
+
+.container {
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 h1 {
-    color: rgb(255, 153, 0);
-    font-family: monospace;
+    color: black;
+    font-family: Raleway;
     font-size: 700%;
 }
 
 h2 {
     
-    color: lightseagreen;
-    font-family: monospace;
+    color: #EBAF66;
+    font-family: Raleway;
     font-size: 500%;
 }
 
@@ -20,27 +27,27 @@ h2 {
     text-align: right;
     margin-right: 15%;
     font-size: 400%;
-    font-family: monospace;
+    font-family: Raleway;
     float:right
 }
 
 h4 {
     position: absolute;
-    bottom: 40%;
+    bottom: 20%;
     right: 15%;
 }
 
 #rules {
-    display: flex;
-    margin: 0% 30% 0% 36%;
     padding: 15px;
     text-align: center;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     width: 25%;
     z-index: 100;
-    font-family: monospace;
+    font-family: Raleway;
     font-size: 150%;
-    background-color: orange;
+    background-color: #EBAF66;
 }
 
 #close {
@@ -62,35 +69,35 @@ div.letter {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: gray;
+    background-color: #67E9EB;
     border: 2px solid black;
     margin: 3px;
     width: 50px;
     height: 50px;
-    font-family: monospace;
+    font-family: Raleway;
     font-size: 200%;
-    color: white;
+    color: black;
 }
 
 #invalid_words {
     visibility: hidden;
-    display: block;
-    color: orange;
+    color: #EBAF66;
     align-items: center;
     text-align: center;
     justify-content: center;
-    font-family: monospace;
+    font-family: Raleway;
     font-size: 150%;
 }
 
 #used_words {
-    color: lightseagreen;
-    font-family: monospace;
-    margin: 20% 10% 0 10%;
-    font-size: 300%;
-    text-align: center;
+    left: 75px;
+    color: #EBAF66;
+    font-family: Raleway;
+    font-size: 200%;
+    font-size: fit-content;
+    width: 400px;
     position: absolute;
-    display: block;
+    text-align: left;
+    justify-content: left;
     flex-wrap: wrap;
-    flex-shrink: 2;
 }
