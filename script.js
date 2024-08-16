@@ -3,9 +3,9 @@ import { DICTIONARY } from "./dictionary.js";
 //initialize
 let game_word = 'start';
 let guess_word = '';
-let undo = 2;
 let score = 0;
 let used_words = [];
+let words_remaining = 12;
 
 //more initialize
 let todays_word = document.getElementById("current-word");
@@ -17,6 +17,8 @@ let scoreboard = document.getElementById("score");
 let show_score = document.createElement("h3");
 show_score.textContent = "Score: " + score;
 scoreboard.appendChild(show_score);
+let words_count = document.getElementById("words_remaining");
+words_count.textContent = "Words Remaining: " + words_remaining;
 
 //fadeout score
 function fadeOut(element) {
@@ -128,7 +130,12 @@ function submitWord(word) {
         guess.firstElementChild.textContent = ""
         guess_word = ""
         
-        
+        //decrement remaining words and update display
+        words_remaining -= 1;
+        words_count.textContent = "Words Remaining: " + words_remaining;
+
+        //check to see if game is over
+        game_end()
     }
     else {
         let alert = document.getElementById("invalid_words");
@@ -270,22 +277,30 @@ function validate_word(word, new_word) {
 
 }
 
+function game_end() {
+    if (words_remaining === 0) {
+        document.removeEventListener("keyup", user_input)
+        let message = document.getElementById("rules")
+        message.innerHTML = "You used all twelve words - your final score is " + score + "!"
+        message.style.display = "block"
+    }
+}
+
 //close tooltip
 document.getElementById("close").addEventListener("click", function() {
     document.getElementById("rules").style.display = "none"
 })
 
-//listen for letter/word submission
-document.addEventListener("keyup", (e) => {
+//manage user input
+function user_input(event) {
     
-    let pressed = String(e.key)
+    let pressed = String(event.key)
 
     let alert = document.getElementById("invalid_words") 
         
     if (alert.style.visibility == "visible") {
         alert.style.visibility = "hidden"
     }
-    
 
     //delete letters
     if (pressed === "Backspace") {
@@ -306,5 +321,9 @@ document.addEventListener("keyup", (e) => {
         typeLetter(letter)
     }
 
-})
+}
+
+//listen for letter/word submission
+document.addEventListener("keyup", user_input)
+
 

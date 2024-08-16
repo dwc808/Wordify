@@ -101,3 +101,9 @@ div.letter {
     justify-content: left;
     flex-wrap: wrap;
 }
+
+#words_remaining {
+    font-size: 150%;
+    color: black;
+    font-family: Raleway;
+}
