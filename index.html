@@ -12,17 +12,6 @@
 <body>
     <h1>Wordify</h1>
 
-    <div class ="container">
-        
-        <div id="used_words">
-        
-        </div>
-        
-        <div id="current-word">
-
-        </div>
-        
-    </div>
     <div id="rules">
         <button id="close">&times;</button>
         <span>
@@ -32,28 +21,49 @@
             a new word. You can only change, add, or 
             remove one letter at a time. The longer the 
             word you create, the more points you get. 
-            You can not repeat words. See how many words 
-            you can make!
+            You can not repeat words. Earn as many points 
+            you can with twelve words!
+            <p>
+            spark ➡️ shark  ✔️ <br>
+            spark ➡️ spar   ✔️ <br>
+            spark ➡️ sparky ✔️ <br>
+            spark ➡️ spurn  ✖️
+            </p>
         </span>
     </div>
 
-    <div id="invalid_words">
-        " "
-    </div>
+    <div class ="gamebox">
+        
+        <div id="current-word">
+
+        </div>
+
+        <div id="invalid_words">
+            " "
+        </div>
+        
+        <div id="submit_word">
+            <div class="letter">
+                
+            </div>
+        </div>
     
-    <div id="submit_word">
-        <div class="letter">
+        <div id="words_remaining">
             
         </div>
-    </div>
-
-    <div id="words_remaining">
         
     </div>
 
-    <div id="score">
-
+    <div class ="gameinfo">
+        <div id="used_words">
+        
+        </div>
+    
+        <div id="score">
+    
+        </div>
     </div>
+   
 
     
 <script src="./script.js" type="module"></script>

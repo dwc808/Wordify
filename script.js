@@ -1,22 +1,20 @@
 import { DICTIONARY } from "./dictionary.js";
 
-//initialize
+//initialize values
 let game_word = 'start';
 let guess_word = '';
 let score = 0;
 let used_words = [];
 let words_remaining = 12;
 
-//more initialize
+//initialize display
 let todays_word = document.getElementById("current-word");
 used_words.push(game_word)
 let current_word = document.createElement("h2");
 current_word.textContent = game_word;
 todays_word.appendChild(current_word);
 let scoreboard = document.getElementById("score");
-let show_score = document.createElement("h3");
-show_score.textContent = "Score: " + score;
-scoreboard.appendChild(show_score);
+scoreboard.textContent = "Score: " + score;
 let words_count = document.getElementById("words_remaining");
 words_count.textContent = "Words Remaining: " + words_remaining;
 
@@ -36,8 +34,7 @@ function fadeOut(element) {
 //update the score
 function updateScore(length) {
     //create element to display score
-    let score_plus = document.createElement("h4");
-    score_plus.style.color = "green";
+    
     let score_tip = 0
     
     if (length === 3) {
@@ -64,9 +61,12 @@ function updateScore(length) {
         score += 50
         score_tip = 50
     }
-
+    
+    let score_plus = document.createElement("h4");
+    score_plus.style.color = "green";
     score_plus.textContent = "+ " + score_tip
-    scoreboard.appendChild(score_plus)
+    let info = document.getElementById("score").parentElement
+    info.appendChild(score_plus)
     fadeOut(score_plus)
 }
 
@@ -75,7 +75,7 @@ function submitWord(word) {
     
     //get first letter of word
     let firstLetter = word.charAt(0);
-    console.log(firstLetter)
+    
     //check if word is in dictionary, unused, and valid
     if (DICTIONARY[firstLetter].includes(word)) {
         //return if word has been used
@@ -117,8 +117,7 @@ function submitWord(word) {
         updateScore(game_word.length)
 
         //update score on screen
-        let scorediv = document.getElementById("score")
-        let scoreboard = scorediv.firstElementChild
+        let scoreboard = document.getElementById("score")
         scoreboard.textContent = "Score: " + score
         current_word.textContent = game_word
 
@@ -281,7 +280,7 @@ function game_end() {
     if (words_remaining === 0) {
         document.removeEventListener("keyup", user_input)
         let message = document.getElementById("rules")
-        message.innerHTML = "You used all twelve words - your final score is " + score + "!"
+        message.innerHTML = "You used all twelve words - your final score is " + score + "!" + "You used the following words: " + used_words
         message.style.display = "block"
     }
 }

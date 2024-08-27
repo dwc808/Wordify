@@ -1,57 +1,92 @@
 body {
-    text-align:center;
-    display: flex;
-    flex-direction: column;
-    max-height: 100vh;
+    display: block;
+    text-align: center;
+    min-height: 80vh;
+    font-family: Raleway;
+    font-size: clamp(24px, 20vw, 200px);
 }
 
-.container {
-    flex-direction: row;
+.gamebox {
+    background-color: #EBAF66;
+    width: clamp(300px, 25%, 650px);
+    border-radius: 15%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    margin-bottom: 10px;
+}
+
+.gameinfo {
+    display: flex;
     justify-content: space-between;
 }
 
 h1 {
-    color: black;
+    color: white;
+    background-color: black;
+    text-align: right;
     font-family: Raleway;
-    font-size: 700%;
+    margin-right: auto;
+    margin-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    padding: 10px 35px 25px 10px;
+    font-size: .4em;
+    line-height: 1em;
+    width: 25%;
 }
 
 h2 {
     
-    color: #EBAF66;
+    color: black;
     font-family: Raleway;
-    font-size: 500%;
+    font-size: .5em;
+    margin-top: 0;
+    margin-bottom: 4%;
 }
 
 #score {
     text-align: right;
     margin-right: 15%;
-    font-size: 400%;
+    font-size: .25em;
     font-family: Raleway;
-    float:right
+    width: 25%;
 }
 
 h4 {
+    font-size: .25em;
     position: absolute;
-    bottom: 20%;
+    bottom: 24%;
     right: 15%;
 }
 
 #rules {
     padding: 15px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
     position: absolute;
-    width: 25%;
+    width: 55%;
+    height: 65%;
     z-index: 100;
     font-family: Raleway;
-    font-size: 150%;
+    font-size: .25em;
     background-color: #EBAF66;
 }
 
+#rules p {
+    font-size: .5em;
+}
+
 #close {
-    font-size: 120%;
+    font-size: 1em;
     background-color: transparent;
     border: none;
     background-image: none;
@@ -59,51 +94,55 @@ h4 {
     justify-content: flex-start;
 }
 
+#close:hover {
+    color: red;
+}
+
 #submit_word {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1em;
 }
 
 div.letter {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #67E9EB;
-    border: 2px solid black;
-    margin: 3px;
-    width: 50px;
-    height: 50px;
+    background-color: #14B1FC;
+    border-radius: 5%;
+    margin-bottom: 15px;
+    margin-right: 2px;
+    margin-left: 2px;
+    width: 1.5em;
+    height: 1.5em;
     font-family: Raleway;
-    font-size: 200%;
+    font-size: .15em;
     color: black;
 }
 
 #invalid_words {
     visibility: hidden;
-    color: #EBAF66;
+    color: black;
     align-items: center;
     text-align: center;
     justify-content: center;
     font-family: Raleway;
-    font-size: 150%;
+    font-size: .08em;
+    margin-bottom: 8px;
 }
 
 #used_words {
-    left: 75px;
-    color: #EBAF66;
+    color: #14B1FC;
     font-family: Raleway;
-    font-size: 200%;
-    font-size: fit-content;
-    width: 400px;
-    position: absolute;
+    font-size: .15em;
+    width: 25%;
     text-align: left;
-    justify-content: left;
-    flex-wrap: wrap;
+    margin-left: 15%;
 }
 
 #words_remaining {
-    font-size: 150%;
+    font-size: .15em;
     color: black;
     font-family: Raleway;
 }
